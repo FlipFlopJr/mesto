@@ -6,27 +6,8 @@ const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 const profilePopup = document.querySelector(".popup_type_edit");
 const cardPopup = document.querySelector(".popup_type_new-card");
 const imagePopup = document.querySelector(".popup_type_image");
-
-
-function createCard(src, title) {
-    const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-    cardElement.querySelector(".card__image").src = src;
-    cardElement.querySelector(".card__title").textContent = title;
-    return cardElement
-}
-
-
-// @todo: Вывести карточки на страницу
-function drawCards() {
-    initialCards.forEach(function addCard(item) {
-        const card = createCard(item.link, item.name)
-        cardsList.append(card)
-    })
-}
-
-drawCards();
-
-
+const imageLinkPopup = imagePopup.querySelector(".popup__image");
+const imageCaptionPopup = imagePopup.querySelector(".popup__caption");
 
 
 // @todo: функция открытия модального окна
@@ -39,8 +20,68 @@ function closeModal(popup) {
     popup.classList.remove('popup_is-opened');
 }
 
+function fillImagePopupData(caption, link) {
+    imageCaptionPopup.textContent = caption;
+    imageLinkPopup.src = link;
+}
 
-// @todo: DOM узлы
+function createCard(src, title) {
+    const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+    cardElement.querySelector(".card__image").src = src;
+    cardElement.querySelector(".card__title").textContent = title;
+
+
+
+    return cardElement
+}
+
+// @todo: Вывести карточки на страницу
+function drawCards() {
+    initialCards.forEach(function addCard(item) {
+        const card = createCard(item.link, item.name)
+        cardsList.append(card)
+    })
+}
+
+drawCards();
+
+// Добавляем обработчик клика по изображению
+const images = document.querySelectorAll(".card__image");
+images.forEach((image) => {
+    image.addEventListener('click', () => {
+        const src = image.getAttribute("src"); // Получаем атрибут src изображения
+        const caption = image.closest(".card").querySelector(".card__description").textContent; // Получаем текст заголовка из описания
+
+        // Открываем модальное окно
+        openModal(imagePopup);
+
+        // Устанавливаем src и текст заголовка в модальном окне
+        imageLinkPopup.src = src;
+        imageCaptionPopup.textContent = caption;
+
+        const closeButton = imagePopup.querySelector('.popup__close');
+        closeButton.addEventListener('click', () => closeModal(imagePopup));
+    });
+});
+
+
+
+// // @todo: open popup
+// const openImage = document.querySelectorAll('.card__image')
+// openImage.forEach((image)=>{
+//     image.addEventListener('click', () => {
+//         openModal(imagePopup)
+//     })
+//     const imageLink = image.src; 
+//     // const   = image.src; 
+
+//     const closeButton = imagePopup.querySelector('.popup__close');
+//     closeButton.addEventListener('click', () => closeModal(imagePopup));
+// })
+// const closeImageButton = imagePopup.querySelector('.popup__close');
+
+// openImage.addEventListener('click', () => openModal(imagePopup));
+// closeImageButton.addEventListener('click', () => closeModal(imagePopup));
 
 
 // @todo: Profile modal window
@@ -75,10 +116,6 @@ const closeCardButton = cardPopup.querySelector('.popup__close');
 
 openCardButton.addEventListener('click', () => openModal(cardPopup));
 closeCardButton.addEventListener('click', () => closeModal(cardPopup));
-
-
-
-
 
 
 // @todo: Функция удаления карточки
