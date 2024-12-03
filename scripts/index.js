@@ -15,6 +15,20 @@ function createCard(src, title) {
     return cardElement
 }
 
+
+// @todo: Вывести карточки на страницу
+function drawCards() {
+    initialCards.forEach(function addCard(item) {
+        const card = createCard(item.link, item.name)
+        cardsList.append(card)
+    })
+}
+
+drawCards();
+
+
+
+
 // @todo: функция открытия модального окна
 function openModal(popup) {
     popup.classList.add('popup_is-opened');
@@ -54,11 +68,30 @@ profileFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 
 // @todo: Открытие/заккрытие модального окна добавления карточки
+
+
 const openCardButton = document.querySelector('.profile__add-button');
 const closeCardButton = cardPopup.querySelector('.popup__close');
 
 openCardButton.addEventListener('click', () => openModal(cardPopup));
 closeCardButton.addEventListener('click', () => closeModal(cardPopup));
+
+
+
+
+
+
+// @todo: Функция удаления карточки
+const cardDeleteButtons = document.querySelectorAll('.card__delete-button');
+
+cardDeleteButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const parentElement = button.closest('.card')
+        parentElement.remove();
+    })
+})
+
+
 
 // @todo: Функция создания карточки
 const placeFormElement = document.querySelector('.popup_type_new-card');
@@ -73,15 +106,17 @@ function handleCardFormSubmit(evt) {
     const card = createCard(cardLinkInput.value, cardNameInput.value);
     cardsList.prepend(card);
     closeModal(placeFormElement);
+    // drawCards();
 }
 
 placeFormElement.addEventListener('submit', handleCardFormSubmit);
 
-// @todo: Функция удаления карточки
 
-// @todo: Вывести карточки на страницу
+// @todo: Функция лайка  карточки
+const cardLikeButtons = document.querySelectorAll('.card__like-button');
 
-initialCards.forEach(function addCard(item) {
-    const card = createCard(item.link, item.name)
-    cardsList.append(card)
+cardLikeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        button.classList.toggle('card__like-button_is-active')
+    })
 })
