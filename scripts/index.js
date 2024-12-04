@@ -9,6 +9,14 @@ const imagePopup = document.querySelector(".popup_type_image");
 const imageLinkPopup = imagePopup.querySelector(".popup__image");
 const imageCaptionPopup = imagePopup.querySelector(".popup__caption");
 
+// Плавное открытие попапов
+document.addEventListener('DOMContentLoaded', () => {
+    // Добавляем класс popup_is-animated ко всем попапам при загрузке
+    const popups = document.querySelectorAll('.popup');
+    popups.forEach(popup => {
+        popup.classList.add('popup_is-animated');
+    });
+});
 
 // Открытие/закрытие модальных окон
 function toggleModal(popup, isOpen) {
@@ -52,6 +60,8 @@ function createCard(src, title) {
     return cardElement;
 }
 
+imagePopup.querySelector('.popup__close').addEventListener('click', () => toggleModal(imagePopup, false));
+
 // Отображение всех карточек на странице
 function drawCards() {
     initialCards.forEach(({ name, link }) => {
@@ -64,6 +74,7 @@ function drawCards() {
 // Обработчик открытия/закрытия модальных окон для профиля
 document.querySelector('.profile__edit-button').addEventListener('click', () => toggleModal(profilePopup, true));
 profilePopup.querySelector('.popup__close').addEventListener('click', () => toggleModal(profilePopup, false));
+
 
 // Обработчик формы редактирования профиля
 const profileFormElement = document.querySelector('.popup_type_edit');
