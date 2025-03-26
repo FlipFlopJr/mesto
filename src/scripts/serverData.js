@@ -1,4 +1,4 @@
-const apiUrl = "https://nomoreparties.co/v1/cohort-202";
+const apiUrl = "https://nomoreparties.co/v1/apf-cohort-202";
 const token = "e19a2425-92bc-4aed-9290-450de7b4c487";
 
 function getUsersData() {
