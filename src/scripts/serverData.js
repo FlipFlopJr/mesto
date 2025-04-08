@@ -3,132 +3,132 @@ const token = "e19a2425-92bc-4aed-9290-450de7b4c487";
 
 function getUsersData() {
     return fetch(`${apiUrl}/users/me`, {
-        method: "GET",
-        headers: {
-            authorization: token,
-        },
+      method: "GET",
+      headers: {
+        authorization: token,
+      },
     }).then((res) => {
-        if (!res.ok) {
-            throw new Error(`Ошибка: ${res.status}`);
-        }
+      if (!res.ok) {
+        throw new Error(`Ошибка: ${res.status}`);
+      }
+      return res.json();
+    });
+  }
+  
+  function getCards() {
+    return fetch(`${apiUrl}/cards`, {
+      method: "GET",
+      headers: {
+        authorization: token,
+      },
+    }).then((res) => {
+      if (res.ok) {
         return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
-}
-
-function getCards() {
-    return fetch(`${apiUrl}/cards`, {
-        method: "GET",
-        headers: {
-            authorization: token,
-        },
-    }).then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-    });
-}
-
-function sendEditProfile(name, about) {
+  }
+  
+  function sendEditProfile(name, about) {
     return fetch(`${apiUrl}/users/me`, {
-        method: "PATCH",
-        headers: {
-            authorization: token,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: name,
-            about: about,
-        }),
+      method: "PATCH",
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
     }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-function addNewCard(name, link) {
+  }
+  
+  function addNewCard(name, link) {
     return fetch(`${apiUrl}/cards`, {
-        method: "POST",
-        headers: {
-            authorization: token,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name: name,
-            link: link,
-        }),
+      method: "POST",
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
     }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-function deleteCard(cardId) {
+  }
+  
+  function deleteCard(cardId) {
     return fetch(`${apiUrl}/cards/${cardId}`, {
-        method: "DELETE",
-        headers: {
-            authorization: token,
-            "Content-Type": "application/json",
-        },
+      method: "DELETE",
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
     }).then((response) => {
-        if (!response.ok) {
-            return Promise.reject(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        return Promise.reject(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-function likeCard(cardId) {
+  }
+  
+  function likeCard(cardId) {
     return fetch(`${apiUrl}/cards/likes/${cardId}`, {
-        method: "PUT",
-        headers: {
-            authorization: token,
-        },
+      method: "PUT",
+      headers: {
+        authorization: token,
+      },
     }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-function unlikeCard(cardId) {
+  }
+  
+  function unlikeCard(cardId) {
     return fetch(`${apiUrl}/cards/likes/${cardId}`, {
-        method: "DELETE",
-        headers: {
-            authorization: token,
-        },
+      method: "DELETE",
+      headers: {
+        authorization: token,
+      },
     }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-function updateAvatar(avatarUrl) {
+  }
+  
+  function updateAvatar(avatarUrl) {
     return fetch(`${apiUrl}/users/me/avatar`, {
-        method: "PATCH",
-        headers: {
-            authorization: token,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            avatar: avatarUrl,
-        }),
+      method: "PATCH",
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: avatarUrl,
+      }),
     }).then((response) => {
-        if (!response.ok) {
-            throw new Error(`Ошибка: ${response.status}`);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+      return response.json();
     });
-}
-
-export {
+  }
+  
+  export {
     getUsersData,
     getCards,
     sendEditProfile,
@@ -137,4 +137,4 @@ export {
     likeCard,
     unlikeCard,
     updateAvatar,
-};
+  };
